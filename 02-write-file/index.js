@@ -15,6 +15,8 @@ const throwError = (err) => {
 
 console.log('Hi, happy to see you!');
 
+fs.open(filePath, 'w', throwError);
+
 rl.on('line', (input) => {
   if (input.toLowerCase().trim() === 'exit') {
     process.exit(2);

@@ -7,6 +7,6 @@ const stream = new fs.ReadStream(filePath);
 stream.on('readable', function () {
   const data = stream.read();
   if (data != null) {
-    console.log('data', data.toString());
+    console.log(data.toString());
   }
 });
