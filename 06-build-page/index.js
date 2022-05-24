@@ -7,17 +7,20 @@ const assetsPath = path.join(__dirname, 'assets');
 const componentsPath = path.join(__dirname, 'components');
 const htmlPath = path.join(__dirname, 'template.html');
 const distDirPath = path.join(__dirname, 'project-dist');
+const indexHtmlPath = path.join(distDirPath, 'index.html');
 
 const makeBundle = async () => {
   await fsPromises.mkdir(distDirPath, {recursive: true}).then(() => {
-    const indexHtmlPath = path.join(distDirPath, 'index.html');
     const indexHtmlFile = fs.createWriteStream(indexHtmlPath);
     const sourceFile = fs.createReadStream(htmlPath);
 
     sourceFile.pipe(indexHtmlFile);
   });
 
-  const data = await fsPromises.readFile(path.join(distDirPath, 'index.html')).then((data) => data.toString());
+  await fsPromises.access(distDirPath);
+  await fsPromises.access(indexHtmlPath);
+
+  const data = await fsPromises.readFile(indexHtmlPath, { encoding: 'utf8' });
 
   const componentsData = await fsPromises.readdir(componentsPath, {withFileTypes: true}).then(async (files) => {
     const mappedComponents = new Map();

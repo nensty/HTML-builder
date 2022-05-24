@@ -12,7 +12,7 @@ const handleError = (err) => {
 };
 
 const makeClone = async () => {
-  await fsPromises.rmdir(duplicatedDirPath, {recursive: true}).then(handleError);
+  await fsPromises.rm(duplicatedDirPath, {recursive: true, force: true}).then(handleError);
 
   await fsPromises.mkdir(duplicatedDirPath, {recursive: true}).then(() => {
     fs.readdir(originalDirPath, async (_, files) => {
